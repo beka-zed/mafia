@@ -121,6 +121,12 @@
             <button class="stop" id="stop">Stop</button>
             <button class="reset" id="reset">Reset</button>
         </div>
+        <div class="stopwatch-display" id="stopwatch2">00:00:00</div>
+        <div class="stopwatch-buttons">
+            <button class="start" id="start2">Start</button>
+            <button class="stop" id="stop2">Stop</button>
+            <button class="reset" id="reset2">Reset</button>
+        </div>
     </div>
     <div class="container">
         <h2>იღვიძებს მაფიაააა</h2>
@@ -527,6 +533,51 @@
         startButton.addEventListener('click', startStopwatch);
         stopButton.addEventListener('click', stopStopwatch);
         resetButton.addEventListener('click', resetStopwatch);
+
+
+
+
+
+        let stopwatchInterval2;
+        let elapsedTime2 = 0;
+
+        const stopwatchDisplay2 = document.getElementById('stopwatch2');
+        const startButton2 = document.getElementById('start2');
+        const stopButton2 = document.getElementById('stop2');
+        const resetButton2 = document.getElementById('reset2');
+
+        function formatTime2(ms) {
+            const totalSeconds2 = Math.floor(ms / 1000);
+            const hours2 = String(Math.floor(totalSeconds2 / 3600)).padStart(2, '0');
+            const minutes2 = String(Math.floor((totalSeconds2 % 3600) / 60)).padStart(2, '0');
+            const seconds2 = String(totalSeconds2 % 60).padStart(2, '0');
+            return `${hours2}:${minutes2}:${seconds2}`;
+        }
+
+        function startStopwatch2() {
+            if (!stopwatchInterval2) {
+                const startTime2 = Date.now() - elapsedTime2;
+                stopwatchInterval2 = setInterval(() => {
+                    elapsedTime2 = Date.now() - startTime2;
+                    stopwatchDisplay2.textContent = formatTime(elapsedTime2);
+                }, 1000);
+            }
+        }
+
+        function stopStopwatch2() {
+            clearInterval(stopwatchInterval2);
+            stopwatchInterval2 = null;
+        }
+
+        function resetStopwatch2() {
+            stopStopwatch2();
+            elapsedTime2 = 0;
+            stopwatchDisplay2.textContent = '00:00:00';
+        }
+
+        startButton2.addEventListener('click', startStopwatch2);
+        stopButton2.addEventListener('click', stopStopwatch2);
+        resetButton2.addEventListener('click', resetStopwatch2);
     </script>
 </body>
 </html>
